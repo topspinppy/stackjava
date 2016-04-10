@@ -1,0 +1,129 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.List;
+public class Hw4_Stack 
+{
+	 private final JTextArea label;
+	    private int maxSize;
+	    private String[] stackArray;
+	    private int top;
+	    public String s;
+	    public long j;
+	    public boolean done=true;
+	public Hw4_Stack(int s) 
+	{
+		maxSize = s;
+        stackArray = new String[maxSize];
+       // initial ค่าเริ่มต้นของ stackArray
+        for ( int i = 0; i < stackArray.length; i++ )
+        {
+            stackArray[i] = "";
+        }
+        top = -1;
+        // ย้ายไปประกาศเป็น global
+        label = new JTextArea();
+        JFrame window = new JFrame("Homework #4 : Stack Simulation Program");
+        Container c = window.getContentPane();
+        c.setLayout(new FlowLayout());
+        label.setText("");
+        c.add(label);
+        label.setText("");
+        window.setSize(300, 350);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setVisible(true);
+        c.setBackground(Color.WHITE);
+		
+	}
+	public static void main(String[] args) 
+	{
+		Hw4_Stack object = new Hw4_Stack(10);
+		object.mainMenu();
+		System.exit(0);
+	}
+	public void mainMenu() 
+	{
+		int choice;
+		do
+		{
+			String nameofmenu=" MainMenu \n ===============\n 1.Push Data\n 2.Pop Data\n 3.Show Size \n 4.Exit\n";
+			choice = Integer.parseInt( JOptionPane.showInputDialog(nameofmenu));
+			if (choice >= 1 && choice <= 4)
+			{
+				if (choice == 1)
+				{
+					push(s);
+				}
+				else if (choice == 2)
+				{
+					pop(s);
+				}
+				else if (choice == 3)
+				{
+					size();
+				}
+				else if (choice == 4)
+				{
+					done = false;
+				}
+			}
+			updateFrame();
+		}
+		while(done);
+	}
+	public void push(String s)
+	{
+		s = JOptionPane.showInputDialog("Enter Data :");
+		if(isFull())
+		{
+			 stackArray[++top] = s;
+			 JOptionPane.showMessageDialog(null, "Add data to Stack finish", "Message", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else JOptionPane.showMessageDialog(null, "Stack Is Full!!", "Message", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public void pop(String s)
+	{
+		s = "";
+		if(isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "Stack Is Empty", "Message", JOptionPane.INFORMATION_MESSAGE);
+		}
+		stackArray[top--]=s;
+		JOptionPane.showMessageDialog(null, "Pop data from Stack Value :"+s, "Message", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public boolean isFull()
+	{
+		boolean f = true;
+		if(top == maxSize - 1)
+		{
+			f = false;
+		}
+		return f;
+	}
+	public void size()
+	{
+		int sizeOfStack=top;
+		JOptionPane.showMessageDialog(null, "sizeOfStack is "+sizeOfStack);
+	}
+	public boolean isEmpty() 
+	{
+		boolean e = false;
+		if(top == -1)
+		{
+			e = true;
+		}
+	    return e;
+	}
+    private void updateFrame() //อัพเดทเฟรม
+    {
+        String output = ""; 
+        for (int i = stackArray.length - 1;i >= 0; i--) //ลดขนาดของ Array
+        {
+            if ( !stackArray[i].equals("") )
+            {
+                output += stackArray[i] + "\n"; //output ของ Array
+            }
+        }
+        label.setText( output );
+    }
+}
